@@ -11,11 +11,14 @@ class Calculator {
         this.operation = undefined
     }
     delete() {
-        this.currentOperand = this.currentOperand.replace(/.$/, '')
-
+        this.currentOperand = this.currentOperand.toString().slice(0, -1)
     }
     appendNumber(number) {
-        this.currentOperand = this.currentOperand.toString() + number.toString()
+        if (number == '.' && this.currentOperand.includes('.')) {
+            this.currentOperand = this.currentOperand.toString()
+        } else {
+            this.currentOperand = this.currentOperand.toString() + number.toString()
+        }
     }  
     chooseOperation(operation) {
 
