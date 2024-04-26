@@ -9,6 +9,7 @@ class Calculator {
         this.currentOperand = ''
         this.previousOperand = ''
         this.operation = undefined
+        this.previousOperandTextElement.innerText = this.previousOperand
     }
 
     delete() {
@@ -24,16 +25,20 @@ class Calculator {
     }  
 
     chooseOperation(operation) {
+        this.operation = operation
         if (this.currentOperand == '') {
+            if (this.previousOperand != '') {
+                this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
+            }
             return
         }
         if (this.previousOperand == '') {
             this.previousOperand = this.currentOperand
-            this.previousOperandTextElement.innerText = (this.previousOperand) + ' ' + operation.toString()
+            this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
         } else if (operation != "=") {
-            this.previousOperand = eval(this.currentOperand+this.operation+this.previousOperand)
-            console.log(eval(this.currentOperand+this.operation+this.previousOperand))
-            this.previousOperandTextElement.innerText = (this.previousOperand) + ' ' + operation.toString()
+            let test = eval(`${this.previousOperand} ${this.operation} ${this.currentOperand}`)
+            this.previousOperand = test
+            this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
         } else {
         }
         this.currentOperand = ''
