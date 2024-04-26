@@ -10,9 +10,11 @@ class Calculator {
         this.previousOperand = ''
         this.operation = undefined
     }
+
     delete() {
         this.currentOperand = this.currentOperand.toString().slice(0, -1)
     }
+
     appendNumber(number) {
         if (number == '.' && this.currentOperand.includes('.')) {
             this.currentOperand = this.currentOperand.toString()
@@ -20,12 +22,28 @@ class Calculator {
             this.currentOperand = this.currentOperand.toString() + number.toString()
         }
     }  
-    chooseOperation(operation) {
 
+    chooseOperation(operation) {
+        if (this.currentOperand == '') {
+            return
+        }
+        if (this.previousOperand == '') {
+            this.previousOperand = this.currentOperand
+            this.previousOperandTextElement.innerText = (this.previousOperand) + ' ' + operation.toString()
+        } else if (operation != "=") {
+            this.previousOperand = eval(this.currentOperand+this.operation+this.previousOperand)
+            console.log(eval(this.currentOperand+this.operation+this.previousOperand))
+            this.previousOperandTextElement.innerText = (this.previousOperand) + ' ' + operation.toString()
+        } else {
+        }
+        this.currentOperand = ''
+        this.currentOperandTextElement.innerText = ''
     }
+
     compute() {
 
     }
+    
     updateDisplay() {
         this.currentOperandTextElement.innerText = this.currentOperand
     }
@@ -46,7 +64,16 @@ numberButtons.forEach(button => {
         calculator.updateDisplay()
     })
 })
+operationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.chooseOperation(button.innerText)
+    })
+})
 deleteButton.addEventListener('click', () => {
     calculator.delete()
+    calculator.updateDisplay()
+})
+allClearButton.addEventListener('click', () => {
+    calculator.clear()
     calculator.updateDisplay()
 })
