@@ -33,3 +33,19 @@
 ### References
 
 - YouTube Tutorial: [Build A Calculator With JavaScript Tutorial](https://www.youtube.com/watch?v=j59qQ7YWLxw&ab_channel=WebDevSimplified) by [Web Dev Simplified](https://www.youtube.com/c/WebDevSimplified)
+
+## [2024-04-26]
+
+### Added
+
+- Continued work on the calculator project.
+  - Experimented with the `chooseOperation` function to handle selecting operations while computing.
+  - Made several commits to test different approaches and refine the logic.
+  - Used `console.log` statements extensively for troubleshooting and debugging.
+  - Enhanced the usage of the `eval` function for evaluating expressions in the calculator.
+  - Currently, the logic for computing expressions is being explored within the `chooseOperation` function.
+
+### Planned Changes
+
+- Refactor the calculator logic to separate the computation logic into the `compute` function.
+- Improve formatting and user experience for selecting operands and operations.
