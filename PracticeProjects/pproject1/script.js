@@ -26,28 +26,59 @@ class Calculator {
 
     chooseOperation(operation) {
         this.operation = operation
-        this.previousOperation
-        if (this.currentOperand == '') {
+        // Figure out the logic
+
+        // Make sure User Inputs number
+        // User then inputs operation
+        // Output goes to previous operand with operand
+        // IF new input is number
+        //    = Will check for previous operand and output answer on previous operand
+        //          if previous operand is empty, = does not work
+        if (this.operation == '=') {
+            if (this.previousOperand != '') {
+                console.log("Test39")
+                this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
+                this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
+            } else {
+                console.log("Test43")
+                return
+            }
+        } else if (this.currentOperand == '') {
             if (this.previousOperand != '') {
                 this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
-                this.previousOperation = this.operation
             }
-            return
-        }
-        if (this.previousOperand == '') {
-            this.previousOperand = this.currentOperand
-            this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
-        } else if (operation != "=" && this.previousOperation != null) {
-            this.previousOperand = eval(`${this.previousOperand} ${this.previousOperation} ${this.currentOperand}`)
-            this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
         } else {
+            this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
+            this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
         }
+        // IF new input is another operation
+        //    Previous operation updates
+
+        // IF new input includes new number AND operation
+        //    previous operand will calculate the PREVIOUS operation with new number, 
+        //    new operand will be in previous operand text
+
+
+        // if (this.currentOperand == '') {
+        //     if (this.previousOperand != '') {
+        //         this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
+        //         this.previousOperation = this.operation
+        //     }
+        //     return
+        // }
+        // if (this.previousOperand == '') {
+        //     this.previousOperand = this.currentOperand
+        //     this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
+        // } else if (operation != "=" && this.previousOperation != null) {
+        //     this.previousOperand = eval(`${this.previousOperand} ${this.previousOperation} ${this.currentOperand}`)
+        //     this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
+        // } else {
+        // }
         this.currentOperand = ''
         this.currentOperandTextElement.innerText = ''
     }
 
     compute() {
-
     }
     
     updateDisplay() {
