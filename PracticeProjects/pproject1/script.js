@@ -26,18 +26,19 @@ class Calculator {
 
     chooseOperation(operation) {
         this.operation = operation
+        this.previousOperation
         if (this.currentOperand == '') {
             if (this.previousOperand != '') {
                 this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
+                this.previousOperation = this.operation
             }
             return
         }
         if (this.previousOperand == '') {
             this.previousOperand = this.currentOperand
             this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
-        } else if (operation != "=") {
-            let test = eval(`${this.previousOperand} ${this.operation} ${this.currentOperand}`)
-            this.previousOperand = test
+        } else if (operation != "=" && this.previousOperation != null) {
+            this.previousOperand = eval(`${this.previousOperand} ${this.previousOperation} ${this.currentOperand}`)
             this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
         } else {
         }
