@@ -19,6 +19,9 @@ class Calculator {
     }
 
     appendNumber(number) {
+        if (this.previousOperand == '') {
+            this.previousOperandTextElement.innerText = ''
+        }
         if (number == '.' && this.currentOperand.includes('.')) {
             this.currentOperand = this.currentOperand.toString()
         } else {
@@ -28,29 +31,32 @@ class Calculator {
 
     chooseOperation(operation) {
         this.operation = operation
-        if (this.operation == '=') {
-            console.log("hello")
-            if (this.previousOperand != '') {
-                console.log("Test39")
-                this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
-                this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
-            } else {
-                console.log("Test43")
-                return
-            }
-        } else if (this.currentOperand == '') {
+        if (this.currentOperand == '') {
             if (this.previousOperand != '') {
                 this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
             }
         } else {
+            this.compute(this.operation)
+            // this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
+            // this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
+        }
+        // this.currentOperand = ''
+        // this.currentOperandTextElement.innerText = ''
+    }
+
+    compute(symbol) {
+        if (symbol == '/' || symbol == '+' || symbol == '-' || symbol == '*') {
             this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
             this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
+        } else if (symbol == '=' && this.previousOperand != '' && this.currentOperand != '') {
+            this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
+            this.previousOperandTextElement.innerText = this.previousOperand
+            this.previousOperand = ''
+        } else {
+            return
         }
         this.currentOperand = ''
         this.currentOperandTextElement.innerText = ''
-    }
-
-    compute() {
     }
     
     updateDisplay() {
@@ -84,5 +90,9 @@ deleteButton.addEventListener('click', () => {
 })
 allClearButton.addEventListener('click', () => {
     calculator.clear()
+    calculator.updateDisplay()
+})
+equalsButton.addEventListener('click', () => {
+    calculator.compute('=')
     calculator.updateDisplay()
 })
