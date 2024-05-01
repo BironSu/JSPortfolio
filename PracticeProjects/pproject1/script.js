@@ -19,7 +19,8 @@ class Calculator {
     }
 
     appendNumber(number) {
-        if (this.previousOperand == '') {
+        if (this.previousOperandTextElement.innerText == '') {
+            this.previousOperand = ''
             this.previousOperandTextElement.innerText = ''
         }
         // Checking user input for 1 decimal and 1 '0' in the beginning only
