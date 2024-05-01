@@ -22,10 +22,13 @@ class Calculator {
         if (this.previousOperand == '') {
             this.previousOperandTextElement.innerText = ''
         }
+        // Checking user input for 1 decimal and 1 '0' in the beginning only
         if (number == '.' && this.currentOperand.includes('.')) {
             this.currentOperand = this.currentOperand.toString()
+        } else if (number !== '.' && this.currentOperand === '0') {
+            this.currentOperand = number.toString();
         } else {
-            this.currentOperand = this.currentOperand.toString() + number.toString()
+            this.currentOperand += number.toString()
         }
     }  
 
@@ -37,14 +40,13 @@ class Calculator {
             }
         } else {
             this.compute(this.operation)
-            // this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
-            // this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
         }
-        // this.currentOperand = ''
-        // this.currentOperandTextElement.innerText = ''
     }
 
     compute(symbol) {
+        if (this.currentOperand == '.') {
+            return
+        }
         if (symbol == '/' || symbol == '+' || symbol == '-' || symbol == '*') {
             this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
             this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
@@ -52,7 +54,7 @@ class Calculator {
             this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
             this.previousOperandTextElement.innerText = this.previousOperand
             this.previousOperand = ''
-        } else {
+        } else  {
             return
         }
         this.currentOperand = ''
@@ -84,15 +86,21 @@ operationButtons.forEach(button => {
         calculator.chooseOperation(button.innerText)
     })
 })
-deleteButton.addEventListener('click', () => {
-    calculator.delete()
-    calculator.updateDisplay()
-})
-allClearButton.addEventListener('click', () => {
-    calculator.clear()
-    calculator.updateDisplay()
-})
-equalsButton.addEventListener('click', () => {
-    calculator.compute('=')
-    calculator.updateDisplay()
-})
+if (deleteButton) {
+    deleteButton.addEventListener('click', () => {
+        calculator.delete()
+        calculator.updateDisplay()
+    })
+}
+if (allClearButton) {
+    allClearButton.addEventListener('click', () => {
+        calculator.clear()
+        calculator.updateDisplay()
+    })
+}
+if (equalsButton) {
+    equalsButton.addEventListener('click', () => {
+        calculator.compute('=')
+        calculator.updateDisplay()
+    })
+}
