@@ -19,9 +19,6 @@ class Calculator {
     }
 
     appendNumber(number) {
-        if (this.previousOperand == '') {
-            this.previousOperandTextElement.innerText = ''
-        }
         // Checking user input for 1 decimal and 1 '0' in the beginning only
         if (number == '.' && this.currentOperand.includes('.')) {
             this.currentOperand = this.currentOperand.toString()
@@ -43,22 +40,19 @@ class Calculator {
         }
     }
 
-    compute(symbol) {
-        if (this.currentOperand == '.') {
-            return
+    compute() {
+        switch(this.operation) {
+            case '\\':
+                break
+            case '*':
+                break
+            case '+':
+                break
+            case '-':
+                break
+            default: 
+                return
         }
-        if (symbol == '/' || symbol == '+' || symbol == '-' || symbol == '*') {
-            this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
-            this.previousOperandTextElement.innerText = this.previousOperand + ' ' + this.operation
-        } else if (symbol == '=' && this.previousOperand != '' && this.currentOperand != '') {
-            this.previousOperand = eval(`${this.previousOperand} ${this.previousOperandTextElement.innerText.slice(-1)} ${this.currentOperand}`)
-            this.previousOperandTextElement.innerText = this.previousOperand
-            this.previousOperand = ''
-        } else  {
-            return
-        }
-        this.currentOperand = ''
-        this.currentOperandTextElement.innerText = ''
     }
     
     updateDisplay() {
@@ -100,7 +94,7 @@ if (allClearButton) {
 }
 if (equalsButton) {
     equalsButton.addEventListener('click', () => {
-        calculator.compute('=')
+        calculator.compute()
         calculator.updateDisplay()
     })
 }
